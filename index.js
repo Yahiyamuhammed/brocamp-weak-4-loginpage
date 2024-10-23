@@ -1,25 +1,39 @@
-const http=require ('http')
-const { stdout } = require('process')
-const hostname='127.0.0.1'
-const port=3000
-// http.createServer((req,res)=>
-// {
-//     res.writeHead(200,{'contet-type':'text/plain'})
-//     res.write("welcome to http server")
-//     res.end()
-// }).listen(port,hostname,()=>{
-//     console.log(`your server has started on http://${hostname}:${port}`);
-    
-// })
-const readline=require('readline')
-const rl=readline.createInterface({
-    input:process.stdin,
-    output:stdout
+const express = require('express')
+const app = express()
+const bodyparser = require('body-parser')
+const { v4: uuidv4 } = require('uuid')
+const session = require('express-session')
+const db=require('./config/db')
 
+
+app.set('view engine', 'ejs')
+
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({ extended: true }))
+app.use(session({
+    secret: uuidv4(),
+    resave: false,
+    saveUninitialized: true
+}))
+console.log(session);
+
+
+const userRoute=require('./router/userRoute')
+const adminRoute=require('./router/adminRoute')
+
+app.use('/user',userRoute)
+app.use('/admin',adminRoute)
+
+db.connect((err)=>{
+    if(err)
+        console.log('connection error',err);
+    else
+        console.log('connection successfull');
+        
+        
 })
-rl.question('enter your name',(name)=>
-{
-    console.log(name);
-    rl.close()
-    
+
+app.listen(3000, () => {
+    console.log('sever started');
+
 })
