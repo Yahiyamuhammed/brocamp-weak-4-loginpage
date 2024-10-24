@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient,ObjectId } = require("mongodb");
 
 const state = {
   db: null,
@@ -37,4 +37,5 @@ const get = () => state.db;
 module.exports = {
   connect,
   get,
+  ObjectId
 };

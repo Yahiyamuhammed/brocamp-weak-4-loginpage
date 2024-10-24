@@ -10,7 +10,7 @@
                     <span class="text-danger">Invalid password</span>
                 <% } %>
             </div>
-            <form action="/user/login" method="post">
+            <form action="/<%= user %>/login" method="post">
                 <div class="form-group">
                     <input type="email" class="form-control" placeholder="email" name="email" required>
                 </div>
@@ -19,7 +19,7 @@
                 </div>
                 <button type="submit" class="btn btn-success rounded-pill">submit</button>
             </form>
-            <small><a href="/user/signup">create account</a></small><br>
+            <small><a href="/<%= user %>/signup">create account</a></small><br>
 
         </div>
     </div>
